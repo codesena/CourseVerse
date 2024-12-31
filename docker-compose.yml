@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_courseSellingApp_data:/data/db
+    command: mongod --quiet --logpath /dev/null
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017/hungryhub
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongodb
+
+  admin_dashboard:
+    build:
+      context: "./frontend/Admin Dashboard"
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - "./frontend/Admin Dashboard:/usr/src/app"
+      - /usr/src/app/node_modules
+    depends_on:
+      - backend
+
+  user_dashboard:
+    build:
+      context: "./frontend/User Dashboard"
+      dockerfile: Dockerfile
+    ports:
+      - "5174:5174"
+    volumes:
+      - "./frontend/User Dashboard:/usr/src/app"
+      - /usr/src/app/node_modules
+    depends_on:
+      - admin_dashboard
+
+volumes:
+  mongodb_courseSellingApp_data:

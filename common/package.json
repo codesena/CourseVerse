@@ -1,0 +1,16 @@
+{
+  "name": "@adityakumar172001/courselling_types",
+  "version": "1.0.2",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^7.6.7",
+    "zod": "3.22.4"
+  }
+}
